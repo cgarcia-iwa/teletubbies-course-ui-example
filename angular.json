@@ -2,11 +2,12 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   },
   "newProjectRoot": "projects",
   "projects": {
-    "teletubbies-course-example-fe": {
+    "teletubbies-course-ui-example": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +62,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "teletubbies-course-example-fe:build:production"
+              "buildTarget": "teletubbies-course-ui-example:build:production"
             },
             "development": {
-              "buildTarget": "teletubbies-course-example-fe:build:development"
+              "buildTarget": "teletubbies-course-ui-example:build:development"
             }
           },
           "defaultConfiguration": "development"
