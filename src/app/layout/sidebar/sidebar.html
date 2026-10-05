@@ -1,0 +1,10 @@
+<nav>
+  <h2 class="brand">Teletubbies</h2>
+  <ul>
+    @for (item of menuItems; track item.link) {
+      <li>
+        <a [routerLink]="item.link" routerLinkActive="active">{{ item.label }}</a>
+      </li>
+    }
+  </ul>
+</nav>
