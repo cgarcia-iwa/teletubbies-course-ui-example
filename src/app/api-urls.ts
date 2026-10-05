@@ -3,6 +3,8 @@ import { environment } from '../environments/environment';
 export const API = {
   BASE_URL: environment.apiBaseUrl,
 
+  LOGIN_URL: 'auth/login',
+
   GET_ALL_COURSES_BY_FILTERS_URL: 'courses',
   GET_COURSE_BY_ID_URL: 'courses/{courseId}',
   CREATE_COURSE_URL: 'courses',
