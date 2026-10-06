@@ -9,7 +9,7 @@ import { MOCK_INSTRUCTORS } from '../../core/mock/instructors.mock';
 @Component({
   selector: 'app-instructors',
   templateUrl: './instructors.html',
-  styleUrl: './instructors.scss',
+  styleUrl: './instructors.scss'
 })
 export class Instructors {
   protected readonly instructors = signal(MOCK_INSTRUCTORS);
@@ -18,7 +18,7 @@ export class Instructors {
   protected readonly filteredInstructors = computed(() => {
     const filter = this.nameFilter().trim().toLowerCase();
     return this.instructors().filter((instructor) =>
-      instructor.fullName.toLowerCase().includes(filter),
+      instructor.fullName.toLowerCase().includes(filter)
     );
   });
 

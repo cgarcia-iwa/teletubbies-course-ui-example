@@ -6,7 +6,7 @@ describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
-      providers: [provideRouter([])],
+      providers: [provideRouter([])]
     }).compileComponents();
   });
 
@@ -19,7 +19,7 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const links = Array.from(
-      (fixture.nativeElement as HTMLElement).querySelectorAll('app-sidebar a'),
+      (fixture.nativeElement as HTMLElement).querySelectorAll('app-sidebar a')
     ).map((a) => a.textContent?.trim());
     expect(links).toEqual(['Cursos', 'Instructores']);
   });

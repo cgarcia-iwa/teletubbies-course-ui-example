@@ -4,7 +4,7 @@ export const COURSE_CATEGORIES = [
   'BUSINESS',
   'LANGUAGES',
   'SCIENCE',
-  'ARTS',
+  'ARTS'
 ] as const;
 
 export type CourseCategory = (typeof COURSE_CATEGORIES)[number];

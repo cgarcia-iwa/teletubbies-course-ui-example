@@ -15,5 +15,5 @@ export const API = {
   GET_INSTRUCTOR_BY_ID_URL: 'instructors/{instructorId}',
   CREATE_INSTRUCTOR_URL: 'instructors',
   UPDATE_INSTRUCTOR_URL: 'instructors/{instructorId}',
-  DELETE_INSTRUCTOR_URL: 'instructors/{instructorId}',
+  DELETE_INSTRUCTOR_URL: 'instructors/{instructorId}'
 };

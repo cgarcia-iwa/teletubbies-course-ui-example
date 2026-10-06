@@ -7,6 +7,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(), // requerido por ApiService (HttpClient)
+    provideHttpClient() // requerido por ApiService (HttpClient)
   ]
 };

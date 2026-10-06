@@ -9,7 +9,7 @@ import { MOCK_COURSES } from '../../core/mock/courses.mock';
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.html',
-  styleUrl: './courses.scss',
+  styleUrl: './courses.scss'
 })
 export class Courses {
   // signal: estado reactivo; la vista se actualiza sola cuando cambia.

@@ -6,7 +6,7 @@ import {
   CoursesFilterRequest,
   CoursesPagedResources,
   NewCourseRequest,
-  UpdateCourseRequest,
+  UpdateCourseRequest
 } from '../../shared/model/course.model';
 import { ApiService } from './api.service';
 

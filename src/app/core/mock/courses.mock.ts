@@ -10,7 +10,7 @@ export const MOCK_COURSES: CourseResource[] = [
     duration: 20,
     level: 'BEGINNER',
     category: 'PROGRAMMING',
-    instructor: MOCK_INSTRUCTORS[1],
+    instructor: MOCK_INSTRUCTORS[1]
   },
   {
     id: 'b2222222-0000-0000-0000-000000000002',
@@ -19,7 +19,7 @@ export const MOCK_COURSES: CourseResource[] = [
     duration: 15,
     level: 'INTERMEDIATE',
     category: 'DESIGN',
-    instructor: MOCK_INSTRUCTORS[2],
+    instructor: MOCK_INSTRUCTORS[2]
   },
   {
     id: 'b2222222-0000-0000-0000-000000000003',
@@ -27,7 +27,7 @@ export const MOCK_COURSES: CourseResource[] = [
     duration: 30,
     level: 'ADVANCED',
     category: 'BUSINESS',
-    instructor: MOCK_INSTRUCTORS[0],
+    instructor: MOCK_INSTRUCTORS[0]
   },
   {
     id: 'b2222222-0000-0000-0000-000000000004',
@@ -36,6 +36,6 @@ export const MOCK_COURSES: CourseResource[] = [
     duration: 40,
     level: 'BEGINNER',
     category: 'LANGUAGES',
-    instructor: MOCK_INSTRUCTORS[3],
-  },
+    instructor: MOCK_INSTRUCTORS[3]
+  }
 ];

@@ -6,7 +6,7 @@ import {
   InstructorsFilterRequest,
   InstructorsPagedResources,
   NewInstructorRequest,
-  UpdateInstructorRequest,
+  UpdateInstructorRequest
 } from '../../shared/model/instructor.model';
 import { ApiService } from './api.service';
 

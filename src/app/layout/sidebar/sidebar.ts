@@ -11,11 +11,11 @@ interface MenuItem {
   selector: 'app-sidebar',
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './sidebar.html',
-  styleUrl: './sidebar.scss',
+  styleUrl: './sidebar.scss'
 })
 export class Sidebar {
   protected readonly menuItems: MenuItem[] = [
     { label: 'Cursos', link: '/courses' },
-    { label: 'Instructores', link: '/instructors' },
+    { label: 'Instructores', link: '/instructors' }
   ];
 }
