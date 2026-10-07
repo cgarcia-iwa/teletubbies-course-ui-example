@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'courses' },
@@ -9,10 +10,14 @@ export const routes: Routes = [
   // loadComponent: carga el componente bajo demanda (lazy loading).
   {
     path: 'courses',
+    canActivate: [authGuard],
+    data: { allowedRoles: ['ADMINISTRATOR', 'TEACHER'] },
     loadComponent: () => import('./pages/courses/courses').then((m) => m.Courses)
   },
   {
     path: 'instructors',
+    canActivate: [authGuard],
+    data: { allowedRoles: ['ADMINISTRATOR', 'TEACHER'] },
     loadComponent: () => import('./pages/instructors/instructors').then((m) => m.Instructors)
   }
 ];

@@ -1,19 +1,22 @@
-import { Component, computed, signal } from '@angular/core';
-import { MOCK_COURSES } from '../../core/mock/courses.mock';
+import { Component, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
+import { CourseService } from '../../core/services/course.service';
 
-/**
- * Catálogo de cursos.
- * Para conectarlo al API: inyectar CourseService con inject() y reemplazar
- * MOCK_COURSES por courseService.getAllByFilters(...) (data.content del resultado).
- */
+/** Catálogo de cursos. */
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.html',
   styleUrl: './courses.scss'
 })
 export class Courses {
+  private readonly courseService = inject(CourseService);
+
   // signal: estado reactivo; la vista se actualiza sola cuando cambia.
-  protected readonly courses = signal(MOCK_COURSES);
+  protected readonly courses = toSignal(
+    this.courseService.getAllByFilters().pipe(map((response) => response.data.content)),
+    { initialValue: [] }
+  );
   protected readonly nameFilter = signal('');
 
   // computed: valor derivado que se recalcula cuando cambian courses o nameFilter.

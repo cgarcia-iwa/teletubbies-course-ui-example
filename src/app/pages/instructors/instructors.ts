@@ -1,18 +1,21 @@
-import { Component, computed, signal } from '@angular/core';
-import { MOCK_INSTRUCTORS } from '../../core/mock/instructors.mock';
+import { Component, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
+import { InstructorService } from '../../core/services/instructor.service';
 
-/**
- * Catálogo de instructores.
- * Para conectarlo al API: inyectar InstructorService con inject() y reemplazar
- * MOCK_INSTRUCTORS por instructorService.getAllByFilters(...) (data.content del resultado).
- */
+/** Catálogo de instructores. */
 @Component({
   selector: 'app-instructors',
   templateUrl: './instructors.html',
   styleUrl: './instructors.scss'
 })
 export class Instructors {
-  protected readonly instructors = signal(MOCK_INSTRUCTORS);
+  private readonly instructorService = inject(InstructorService);
+
+  protected readonly instructors = toSignal(
+    this.instructorService.getAllByFilters().pipe(map((response) => response.data.content)),
+    { initialValue: [] }
+  );
   protected readonly nameFilter = signal('');
 
   protected readonly filteredInstructors = computed(() => {

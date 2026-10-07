@@ -1,6 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AUTH_STORAGE_KEY, AuthService } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 import { ValidationMessage } from '../../shared/components/validation-message/validation-message';
 import { LOGIN_ERRORS } from './login-errors';
 
@@ -13,6 +14,7 @@ import { LOGIN_ERRORS } from './login-errors';
 export class Login {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   validationMessages = LOGIN_ERRORS;
 
@@ -32,8 +34,8 @@ export class Login {
   }
 
   onSave(): void {
-    this.authService.login(this.form.getRawValue()).subscribe((response) => {
-      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(response));
+    this.authService.login(this.form.getRawValue()).subscribe(() => {
+      this.router.navigateByUrl('/courses');
     });
   }
 }
