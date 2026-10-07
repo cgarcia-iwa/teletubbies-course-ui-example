@@ -1,31 +1,28 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { Observable, map } from 'rxjs';
 import { CourseService } from '../../core/services/course.service';
+import { CourseResource } from '../../shared/model/course.model';
 
 /** Catálogo de cursos. */
 @Component({
   selector: 'app-courses',
+  imports: [AsyncPipe],
   templateUrl: './courses.html',
   styleUrl: './courses.scss'
 })
-export class Courses {
+export class Courses implements OnInit {
   private readonly courseService = inject(CourseService);
 
-  // signal: estado reactivo; la vista se actualiza sola cuando cambia.
-  protected readonly courses = toSignal(
-    this.courseService.getAllByFilters().pipe(map((response) => response.data.content)),
-    { initialValue: [] }
-  );
-  protected readonly nameFilter = signal('');
+  courses$!: Observable<CourseResource[]>;
 
-  // computed: valor derivado que se recalcula cuando cambian courses o nameFilter.
-  protected readonly filteredCourses = computed(() => {
-    const filter = this.nameFilter().trim().toLowerCase();
-    return this.courses().filter((course) => course.name.toLowerCase().includes(filter));
-  });
+  ngOnInit(): void {
+    this.loadCourses();
+  }
 
-  protected onFilterInput(event: Event): void {
-    this.nameFilter.set((event.target as HTMLInputElement).value);
+  protected loadCourses(): void {
+    this.courses$ = this.courseService
+      .getAllByFilters()
+      .pipe(map((response) => response.data.content));
   }
 }
