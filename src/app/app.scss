@@ -6,4 +6,8 @@
 main {
   flex: 1;
   padding: 1.5rem 2rem;
+
+  &.main-full {
+    padding: 0;
+  }
 }

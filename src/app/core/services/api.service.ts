@@ -1,31 +1,30 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { API } from '../../api-urls';
 
 /**
  * Wrapper genérico sobre HttpClient. Los services de cada entidad
- * (CourseService, InstructorService) lo usan para no repetir la URL base
- * ni el armado de query params.
+ * (CourseService, InstructorService) lo usan para no repetir
+ * el armado de query params. Las URLs ya vienen completas desde `API`.
  */
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private readonly http = inject(HttpClient);
 
   get<T>(url: string, params?: object): Observable<T> {
-    return this.http.get<T>(`${API.BASE_URL}/${url}`, { params: this.toHttpParams(params) });
+    return this.http.get<T>(url, { params: this.toHttpParams(params) });
   }
 
   post<T>(url: string, body: unknown): Observable<T> {
-    return this.http.post<T>(`${API.BASE_URL}/${url}`, body);
+    return this.http.post<T>(url, body);
   }
 
   put<T>(url: string, body: unknown): Observable<T> {
-    return this.http.put<T>(`${API.BASE_URL}/${url}`, body);
+    return this.http.put<T>(url, body);
   }
 
   delete<T>(url: string): Observable<T> {
-    return this.http.delete<T>(`${API.BASE_URL}/${url}`);
+    return this.http.delete<T>(url);
   }
 
   /** Convierte un objeto de filtros a HttpParams ignorando valores vacíos. */

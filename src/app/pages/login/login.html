@@ -1,0 +1,85 @@
+<div class="login-page">
+  <div class="row g-0 min-vh-100">
+    <div class="col-lg-6 d-none d-lg-flex flex-column justify-content-between brand-panel p-5">
+      <div class="d-flex align-items-center gap-3">
+        <div class="brand-icon"><i class="bi bi-journal-bookmark-fill"></i></div>
+        <div>
+          <span class="brand-name">LearnHub</span>
+          <span class="brand-tag d-block">Pro</span>
+        </div>
+      </div>
+
+      <div class="brand-hero">
+        <h1>Unlock Your Potential</h1>
+        <p>Learn at your own pace with expert-led courses designed for modern professionals.</p>
+        <ul class="feature-list list-unstyled">
+          <li>
+            <span class="check-icon"><i class="bi bi-check-lg"></i></span>
+            Learn from industry experts and top instructors
+          </li>
+          <li>
+            <span class="check-icon"><i class="bi bi-check-lg"></i></span>
+            Interactive projects and real-world assignments
+          </li>
+          <li>
+            <span class="check-icon"><i class="bi bi-check-lg"></i></span>
+            Earn certificates to advance your career
+          </li>
+        </ul>
+      </div>
+
+      <p class="brand-footer mb-0">&copy; 2026 LearnHub. Empowering learners worldwide.</p>
+    </div>
+
+    <div class="col-lg-6 d-flex align-items-center justify-content-center form-panel p-4 p-md-5">
+      <div class="form-wrapper w-100">
+        <div class="d-flex d-lg-none align-items-center gap-2 mb-5">
+          <div class="brand-icon brand-icon-sm"><i class="bi bi-journal-bookmark-fill"></i></div>
+          <span class="brand-name">LearnHub</span>
+        </div>
+
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Sign in to continue your learning journey</p>
+
+        <form [formGroup]="form" novalidate>
+          <div class="mb-3">
+            <label class="form-label" for="email">Email Address</label>
+            <input
+              id="email"
+              type="email"
+              class="form-control"
+              formControlName="email"
+              placeholder="you@example.com"
+              autocomplete="email" />
+            <app-validation-message [control]="form.controls.email" [errors]="validationMessages.email" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <div class="input-group">
+              <input
+                [type]="passwordFieldType()"
+                id="password"
+                class="form-control"
+                formControlName="password"
+                placeholder="••••••••"
+                autocomplete="current-password" />
+              <button
+                type="button"
+                class="btn btn-toggle-password"
+                (click)="togglePasswordVisibility()"
+                [attr.aria-label]="togglePasswordAriaLabel()">
+                <i class="bi" [class.bi-eye]="!showPassword()" [class.bi-eye-slash]="showPassword()"></i>
+              </button>
+            </div>
+            <app-validation-message [control]="form.controls.password" [errors]="validationMessages.password" />
+          </div>
+
+          <button type="button" class="btn btn-sign-in w-100 mt-4" [disabled]="form.invalid" (click)="onSave()">
+            Sign In
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

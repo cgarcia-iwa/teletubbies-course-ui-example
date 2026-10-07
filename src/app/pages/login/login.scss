@@ -1,0 +1,204 @@
+$brand-blue-light: #4f7cf6;
+$brand-blue-dark: #2743d6;
+$navy-900: #10131c;
+$navy-800: #171b28;
+$navy-700: #1e2433;
+$navy-border: #2b3245;
+$text-muted-dark: #8b93a7;
+
+.login-page {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.brand-panel {
+  background: linear-gradient(135deg, $brand-blue-light 0%, $brand-blue-dark 100%);
+  color: #fff;
+}
+
+.brand-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+
+  &.brand-icon-sm {
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+  }
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.brand-tag {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.brand-hero {
+  h1 {
+    font-weight: 800;
+    font-size: 2.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  p {
+    font-size: 1.05rem;
+    opacity: 0.9;
+    max-width: 440px;
+    margin-bottom: 2rem;
+  }
+}
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+.check-icon {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.brand-footer {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.form-panel {
+  background: $navy-900;
+}
+
+.form-wrapper {
+  max-width: 400px;
+
+  h2 {
+    color: #fff;
+    font-weight: 800;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    color: $text-muted-dark;
+    margin-bottom: 2rem;
+  }
+}
+
+.form-label {
+  color: $text-muted-dark;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  background: $navy-700;
+  border: 1px solid $navy-border;
+  color: #fff;
+  padding: 0.65rem 0.9rem;
+
+  &::placeholder {
+    color: #5b6274;
+  }
+
+  &:focus {
+    background: $navy-700;
+    border-color: $brand-blue-light;
+    color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba($brand-blue-light, 0.25);
+  }
+
+  &.is-invalid {
+    border-color: #e5484d;
+  }
+}
+
+.input-group {
+  .form-control {
+    border-right: none;
+  }
+
+  .btn-toggle-password {
+    background: $navy-700;
+    border: 1px solid $navy-border;
+    border-left: none;
+    color: $text-muted-dark;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .form-control.is-invalid + .btn-toggle-password {
+    border-color: #e5484d;
+  }
+}
+
+.form-check-label {
+  color: $text-muted-dark;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.form-check-input:checked {
+  background-color: $brand-blue-light;
+  border-color: $brand-blue-light;
+}
+
+.link {
+  color: #6f93f8;
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover {
+    color: #a3bbfb;
+    text-decoration: underline;
+  }
+}
+
+.btn-sign-in {
+  background: linear-gradient(135deg, $brand-blue-light 0%, $brand-blue-dark 100%);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem;
+  border: none;
+
+  &:hover {
+    filter: brightness(1.08);
+    color: #fff;
+  }
+}
+
+.create-account {
+  color: $text-muted-dark;
+  font-size: 0.9rem;
+  margin-top: 1.5rem;
+}
