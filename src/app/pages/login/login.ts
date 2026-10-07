@@ -1,5 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AUTH_STORAGE_KEY, AuthService } from '../../core/services/auth.service';
 import { ValidationMessage } from '../../shared/components/validation-message/validation-message';
 import { LOGIN_ERRORS } from './login-errors';
 
@@ -11,6 +12,7 @@ import { LOGIN_ERRORS } from './login-errors';
 })
 export class Login {
   private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
 
   validationMessages = LOGIN_ERRORS;
 
@@ -30,7 +32,8 @@ export class Login {
   }
 
   onSave(): void {
-    // TODO: conectar con AuthService cuando exista la lógica de autenticación.
-    console.log('login submit', this.form.getRawValue());
+    this.authService.login(this.form.getRawValue()).subscribe((response) => {
+      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(response));
+    });
   }
 }
