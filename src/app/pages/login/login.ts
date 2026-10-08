@@ -34,8 +34,14 @@ export class Login {
   }
 
   onSave(): void {
-    this.authService.login(this.form.getRawValue()).subscribe(() => {
-      this.router.navigateByUrl('/courses');
-    });
+    const { email, password } = this.form.value;
+    this.authService
+      .login({
+        email,
+        password
+      })
+      .subscribe(() => {
+        this.router.navigateByUrl('/courses');
+      });
   }
 }
