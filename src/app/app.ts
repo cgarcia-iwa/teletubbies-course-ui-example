@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter, map, startWith } from 'rxjs';
 import { Sidebar } from './layout/sidebar/sidebar';
 
 @Component({
@@ -8,4 +10,16 @@ import { Sidebar } from './layout/sidebar/sidebar';
   styleUrl: './app.scss',
   templateUrl: './app.html'
 })
-export class App {}
+export class App {
+  private readonly router = inject(Router);
+
+  // Rutas de pantalla completa (sin sidebar), como login.
+  protected readonly showSidebar = toSignal(
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map((event) => !event.urlAfterRedirects.startsWith('/login')),
+      startWith(!this.router.url.startsWith('/login'))
+    ),
+    { initialValue: true }
+  );
+}

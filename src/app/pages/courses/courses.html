@@ -1,6 +1,6 @@
 <header class="page-header">
   <h1>Cursos</h1>
-  <input type="search" placeholder="Buscar por nombre" [value]="nameFilter()" (input)="onFilterInput($event)" />
+  <input type="search" placeholder="Buscar por nombre" />
 </header>
 
 <table>
@@ -14,23 +14,29 @@
     </tr>
   </thead>
   <tbody>
-    <!-- @for requiere "track": identifica cada fila para no re-renderizar todo -->
-    @for (course of filteredCourses(); track course.id) {
+    @if (courses$ | async; as courses) {
+      <!-- @for requiere "track": identifica cada fila para no re-renderizar todo -->
+      @for (course of courses; track course.id) {
+        <tr>
+          <td>
+            <strong>{{ course.name }}</strong>
+            @if (course.description) {
+              <small>{{ course.description }}</small>
+            }
+          </td>
+          <td>{{ course.category }}</td>
+          <td>{{ course.level }}</td>
+          <td>{{ course.duration }}</td>
+          <td>{{ course.instructor.fullName }}</td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5" class="empty">No hay cursos que mostrar.</td>
+        </tr>
+      }
+    } @else {
       <tr>
-        <td>
-          <strong>{{ course.name }}</strong>
-          @if (course.description) {
-            <small>{{ course.description }}</small>
-          }
-        </td>
-        <td>{{ course.category }}</td>
-        <td>{{ course.level }}</td>
-        <td>{{ course.duration }}</td>
-        <td>{{ course.instructor.fullName }}</td>
-      </tr>
-    } @empty {
-      <tr>
-        <td colspan="5" class="empty">No hay cursos que mostrar.</td>
+        <td colspan="5" class="empty">Cargando cursos…</td>
       </tr>
     }
   </tbody>

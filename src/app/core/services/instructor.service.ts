@@ -1,6 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { API } from '../../api-urls';
+import {
+  CREATE_INSTRUCTOR_URL,
+  DELETE_INSTRUCTOR_URL,
+  GET_ALL_INSTRUCTORS_BY_FILTERS_URL,
+  GET_INSTRUCTOR_BY_ID_URL,
+  UPDATE_INSTRUCTOR_URL
+} from '../../api-urls';
 import {
   InstructorResponse,
   InstructorsFilterRequest,
@@ -19,22 +25,22 @@ export class InstructorService {
   private readonly api = inject(ApiService);
 
   getAllByFilters(filters: InstructorsFilterRequest = {}): Observable<InstructorsPagedResources> {
-    return this.api.get(API.GET_ALL_INSTRUCTORS_BY_FILTERS_URL, filters);
+    return this.api.get(GET_ALL_INSTRUCTORS_BY_FILTERS_URL, filters);
   }
 
   getById(instructorId: string): Observable<InstructorResponse> {
-    return this.api.get(API.GET_INSTRUCTOR_BY_ID_URL.replace('{instructorId}', instructorId));
+    return this.api.get(GET_INSTRUCTOR_BY_ID_URL.replace('{instructorId}', instructorId));
   }
 
   create(request: NewInstructorRequest): Observable<InstructorResponse> {
-    return this.api.post(API.CREATE_INSTRUCTOR_URL, request);
+    return this.api.post(CREATE_INSTRUCTOR_URL, request);
   }
 
   update(instructorId: string, request: UpdateInstructorRequest): Observable<InstructorResponse> {
-    return this.api.put(API.UPDATE_INSTRUCTOR_URL.replace('{instructorId}', instructorId), request);
+    return this.api.put(UPDATE_INSTRUCTOR_URL.replace('{instructorId}', instructorId), request);
   }
 
   delete(instructorId: string): Observable<void> {
-    return this.api.delete(API.DELETE_INSTRUCTOR_URL.replace('{instructorId}', instructorId));
+    return this.api.delete(DELETE_INSTRUCTOR_URL.replace('{instructorId}', instructorId));
   }
 }

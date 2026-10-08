@@ -1,4 +1,6 @@
-<app-sidebar />
-<main>
+@if (showSidebar()) {
+  <app-sidebar />
+}
+<main [class.main-full]="!showSidebar()">
   <router-outlet />
 </main>

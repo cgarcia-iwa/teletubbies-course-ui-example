@@ -1,4 +1,4 @@
-import { InstructorRole } from './instructor-role.model';
+import { InstructorRoleType } from './instructor-role.model';
 
 export interface LoginRequest {
   email: string;
@@ -9,12 +9,12 @@ export interface LoginResponse {
   token: string;
   tokenType: 'Bearer';
   expiresIn: number;
-  role: InstructorRole;
+  role: InstructorRoleType;
 }
 
 export interface JwtClaims {
   sub: string;
-  role: InstructorRole;
+  role: InstructorRoleType;
   iat: number;
   exp: number;
 }

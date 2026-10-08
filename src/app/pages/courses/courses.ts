@@ -1,28 +1,28 @@
-import { Component, computed, signal } from '@angular/core';
-import { MOCK_COURSES } from '../../core/mock/courses.mock';
+import { AsyncPipe } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { Observable, map } from 'rxjs';
+import { CourseService } from '../../core/services/course.service';
+import { CourseResource } from '../../shared/model/course.model';
 
-/**
- * Catálogo de cursos.
- * Para conectarlo al API: inyectar CourseService con inject() y reemplazar
- * MOCK_COURSES por courseService.getAllByFilters(...) (data.content del resultado).
- */
+/** Catálogo de cursos. */
 @Component({
   selector: 'app-courses',
+  imports: [AsyncPipe],
   templateUrl: './courses.html',
   styleUrl: './courses.scss'
 })
-export class Courses {
-  // signal: estado reactivo; la vista se actualiza sola cuando cambia.
-  protected readonly courses = signal(MOCK_COURSES);
-  protected readonly nameFilter = signal('');
+export class Courses implements OnInit {
+  private readonly courseService = inject(CourseService);
 
-  // computed: valor derivado que se recalcula cuando cambian courses o nameFilter.
-  protected readonly filteredCourses = computed(() => {
-    const filter = this.nameFilter().trim().toLowerCase();
-    return this.courses().filter((course) => course.name.toLowerCase().includes(filter));
-  });
+  courses$!: Observable<CourseResource[]>;
 
-  protected onFilterInput(event: Event): void {
-    this.nameFilter.set((event.target as HTMLInputElement).value);
+  ngOnInit(): void {
+    this.loadCourses();
+  }
+
+  protected loadCourses(): void {
+    this.courses$ = this.courseService
+      .getAllByFilters()
+      .pipe(map((response) => response.data.content));
   }
 }

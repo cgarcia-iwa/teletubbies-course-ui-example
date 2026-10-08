@@ -1,28 +1,28 @@
-import { Component, computed, signal } from '@angular/core';
-import { MOCK_INSTRUCTORS } from '../../core/mock/instructors.mock';
+import { AsyncPipe } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { Observable, map } from 'rxjs';
+import { InstructorService } from '../../core/services/instructor.service';
+import { InstructorResource } from '../../shared/model/instructor.model';
 
-/**
- * Catálogo de instructores.
- * Para conectarlo al API: inyectar InstructorService con inject() y reemplazar
- * MOCK_INSTRUCTORS por instructorService.getAllByFilters(...) (data.content del resultado).
- */
+/** Catálogo de instructores. */
 @Component({
   selector: 'app-instructors',
+  imports: [AsyncPipe],
   templateUrl: './instructors.html',
   styleUrl: './instructors.scss'
 })
-export class Instructors {
-  protected readonly instructors = signal(MOCK_INSTRUCTORS);
-  protected readonly nameFilter = signal('');
+export class Instructors implements OnInit {
+  private readonly instructorService = inject(InstructorService);
 
-  protected readonly filteredInstructors = computed(() => {
-    const filter = this.nameFilter().trim().toLowerCase();
-    return this.instructors().filter((instructor) =>
-      instructor.fullName.toLowerCase().includes(filter)
-    );
-  });
+  instructors$!: Observable<InstructorResource[]>;
 
-  protected onFilterInput(event: Event): void {
-    this.nameFilter.set((event.target as HTMLInputElement).value);
+  ngOnInit(): void {
+    this.loadInstructors();
+  }
+
+  loadInstructors(): void {
+    this.instructors$ = this.instructorService
+      .getAllByFilters()
+      .pipe(map((response) => response.data.content));
   }
 }
