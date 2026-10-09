@@ -1,0 +1,125 @@
+@if (visible()) {
+  <div
+    class="modal fade show d-block"
+    tabindex="-1"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="instructor-modal-title">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="instructor-modal-title" class="modal-title mb-0">
+            {{ isEditMode() ? 'Editar instructor' : 'Nuevo instructor' }}
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Cerrar"
+            [disabled]="isSubmitting()"
+            (click)="onClose()"></button>
+        </div>
+
+        <div class="modal-body">
+          <form novalidate [formGroup]="form">
+            <div class="row g-3">
+              <div class="col-12">
+                <label for="instructor-full-name" class="form-label">
+                  Nombre completo <span class="text-danger">*</span>
+                </label>
+                <input
+                  id="instructor-full-name"
+                  type="text"
+                  class="form-control"
+                  formControlName="fullName"
+                  autocomplete="name"
+                  [class.is-invalid]="form.controls.fullName.invalid && form.controls.fullName.touched"
+                  placeholder="Ej. Laa-Laa" />
+                <app-validation-message [control]="form.controls.fullName" [errors]="validationMessages.fullName" />
+              </div>
+
+              <div class="col-12">
+                <label for="instructor-email" class="form-label">
+                  Correo electrónico <span class="text-danger">*</span>
+                </label>
+                <input
+                  id="instructor-email"
+                  type="email"
+                  class="form-control"
+                  formControlName="email"
+                  autocomplete="email"
+                  [class.is-invalid]="form.controls.email.invalid && form.controls.email.touched"
+                  placeholder="laalaa@teletubbies.test" />
+                <app-validation-message [control]="form.controls.email" [errors]="validationMessages.email" />
+              </div>
+
+              @if (!isEditMode()) {
+                <div class="col-12 col-md-6">
+                  <label for="instructor-password" class="form-label">
+                    Contraseña <span class="text-danger">*</span>
+                  </label>
+                  <input
+                    id="instructor-password"
+                    type="password"
+                    class="form-control"
+                    formControlName="password"
+                    autocomplete="new-password"
+                    [class.is-invalid]="form.controls.password.invalid && form.controls.password.touched" />
+                  <app-validation-message [control]="form.controls.password" [errors]="validationMessages.password" />
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label for="instructor-confirm-password" class="form-label">
+                    Confirmar contraseña <span class="text-danger">*</span>
+                  </label>
+                  <input
+                    id="instructor-confirm-password"
+                    type="password"
+                    class="form-control"
+                    formControlName="confirmPassword"
+                    autocomplete="new-password"
+                    [class.is-invalid]="
+                      form.controls.confirmPassword.invalid && form.controls.confirmPassword.touched
+                    " />
+                  <app-validation-message
+                    [control]="form.controls.confirmPassword"
+                    [errors]="validationMessages.confirmPassword" />
+                </div>
+
+                <div class="col-12">
+                  <label for="instructor-role" class="form-label"> Rol <span class="text-danger">*</span> </label>
+                  <select
+                    id="instructor-role"
+                    class="form-select"
+                    formControlName="role"
+                    [class.is-invalid]="form.controls.role.invalid && form.controls.role.touched">
+                    @for (role of roles; track role) {
+                      <option [value]="role">{{ roleLabels[role] }}</option>
+                    }
+                  </select>
+                  <app-validation-message [control]="form.controls.role" [errors]="validationMessages.role" />
+                </div>
+              }
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" [disabled]="isSubmitting()" (click)="onClose()">
+            Cancelar
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="form.invalid || isSubmitting()"
+            (click)="onSubmit()">
+            @if (isSubmitting()) {
+              <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+            }
+            {{ isEditMode() ? 'Guardar cambios' : 'Crear instructor' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show"></div>
+}

@@ -1,6 +1,13 @@
 <header class="page-header">
   <h1>Instructores</h1>
-  <input type="search" placeholder="Buscar por nombre" />
+  <div class="d-flex align-items-center gap-2">
+    <input type="search" placeholder="Buscar por nombre" aria-label="Buscar por nombre" />
+    @if (canCreate) {
+      <button type="button" class="btn btn-primary" (click)="openCreate()">
+        <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Agregar instructor
+      </button>
+    }
+  </div>
 </header>
 
 <table>
@@ -31,3 +38,10 @@
     }
   </tbody>
 </table>
+
+<app-instructor-modal
+  [visible]="showInstructorModal()"
+  [mode]="instructorModalMode()"
+  [instructor]="selectedInstructor()"
+  (closed)="showInstructorModal.set(false)"
+  (saved)="onInstructorSaved()" />

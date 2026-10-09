@@ -34,7 +34,7 @@ export class Login {
   }
 
   onSave(): void {
-    const { email, password } = this.form.value;
+    const { email, password } = this.form.getRawValue();
     this.authService
       .login({
         email,
