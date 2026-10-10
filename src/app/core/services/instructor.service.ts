@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import {
   CREATE_INSTRUCTOR_URL,
   DELETE_INSTRUCTOR_URL,
@@ -9,6 +9,7 @@ import {
 } from '../../api-urls';
 import { InstructorRoleType } from '../../shared/model/instructor-role.model';
 import {
+  InstructorResource,
   InstructorResponse,
   InstructorsFilterRequest,
   InstructorsPagedResources,
@@ -25,6 +26,9 @@ export interface InstructorFormValue {
   role: InstructorRoleType;
 }
 
+/** Máximo de instructores que se cargan para un selector (dropdown). */
+export const INSTRUCTOR_OPTIONS_SIZE = 100;
+
 /** Acceso al API de instructores (teletubbies-course-example). */
 @Injectable({ providedIn: 'root' })
 export class InstructorService {
@@ -32,6 +36,13 @@ export class InstructorService {
 
   getAllByFilters(filters: InstructorsFilterRequest = {}): Observable<InstructorsPagedResources> {
     return this.api.get(GET_ALL_INSTRUCTORS_BY_FILTERS_URL, filters);
+  }
+
+  /** Instructores para un dropdown, ordenados por nombre. Limitado a INSTRUCTOR_OPTIONS_SIZE. */
+  getOptions(): Observable<InstructorResource[]> {
+    return this.getAllByFilters({ size: INSTRUCTOR_OPTIONS_SIZE }).pipe(
+      map(({ data }) => [...data.content].sort((a, b) => a.fullName.localeCompare(b.fullName)))
+    );
   }
 
   getById(instructorId: string): Observable<InstructorResponse> {
