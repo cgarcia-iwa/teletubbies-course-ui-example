@@ -7,6 +7,8 @@ import {
   GET_COURSE_BY_ID_URL,
   UPDATE_COURSE_URL
 } from '../../api-urls';
+import { CourseCategory } from '../../shared/model/course-category.model';
+import { CourseLevel } from '../../shared/model/course-level.model';
 import {
   CourseResponse,
   CoursesFilterRequest,
@@ -17,9 +19,19 @@ import {
 import { ApiService } from './api.service';
 
 /**
- * Acceso al API de cursos (teletubbies-course-example).
- * NOTA: todavía ningún componente lo usa; las pantallas trabajan con datos mock.
+ * Valor del formulario de curso (crear/editar). `duration` es texto (input numérico validado
+ * con pattern); `level`/`category` inician vacíos hasta que se elige una opción.
  */
+export interface CourseFormValue {
+  name: string;
+  description: string;
+  duration: string;
+  level: CourseLevel | '';
+  category: CourseCategory | '';
+  instructorId: string;
+}
+
+/** Acceso al API de cursos (teletubbies-course-example). */
 @Injectable({ providedIn: 'root' })
 export class CourseService {
   private readonly api = inject(ApiService);
@@ -32,15 +44,39 @@ export class CourseService {
     return this.api.get(GET_COURSE_BY_ID_URL.replace('{courseId}', courseId));
   }
 
-  create(request: NewCourseRequest): Observable<CourseResponse> {
-    return this.api.post(CREATE_COURSE_URL, request);
+  create(formValue: CourseFormValue): Observable<CourseResponse> {
+    return this.api.post(CREATE_COURSE_URL, this.toRequest(formValue));
   }
 
-  update(courseId: string, request: UpdateCourseRequest): Observable<CourseResponse> {
-    return this.api.put(UPDATE_COURSE_URL.replace('{courseId}', courseId), request);
+  update(courseId: string, formValue: CourseFormValue): Observable<CourseResponse> {
+    return this.api.put(
+      UPDATE_COURSE_URL.replace('{courseId}', courseId),
+      this.toRequest(formValue)
+    );
   }
 
   delete(courseId: string): Observable<void> {
     return this.api.delete(DELETE_COURSE_URL.replace('{courseId}', courseId));
+  }
+
+  /** `level`/`category` ya vienen validados como requeridos por el formulario. */
+  private toRequest({
+    name,
+    description,
+    duration,
+    level,
+    category,
+    instructorId
+  }: CourseFormValue): NewCourseRequest | UpdateCourseRequest {
+    const trimmedDescription = description.trim();
+
+    return {
+      name: name.trim(),
+      ...(trimmedDescription && { description: trimmedDescription }),
+      duration: Number(duration),
+      level: level as CourseLevel,
+      category: category as CourseCategory,
+      instructorId
+    };
   }
 }

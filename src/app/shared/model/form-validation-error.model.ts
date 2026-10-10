@@ -5,6 +5,7 @@ export type ErrorType =
   | 'min'
   | 'minlength'
   | 'mismatch'
+  | 'pattern'
   | 'required'
   | 'whitespace';
 
