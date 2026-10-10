@@ -7,6 +7,6 @@ export const DEFAULT_INSTRUCTOR_ROLE: InstructorRoleType = 'TEACHER';
 
 /** Etiquetas para mostrar los roles en la UI. */
 export const INSTRUCTOR_ROLE_LABELS: Record<InstructorRoleType, string> = {
-  ADMINISTRATOR: 'Administrador',
-  TEACHER: 'Profesor'
+  ADMINISTRATOR: 'Administrator',
+  TEACHER: 'Teacher'
 };

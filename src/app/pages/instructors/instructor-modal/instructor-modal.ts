@@ -132,14 +132,14 @@ export class InstructorModal {
     const request$ = isEdit
       ? this.instructorService.update(instructor.id, value)
       : this.instructorService.create(value);
-    const successTitle = isEdit ? 'Instructor actualizado' : 'Instructor creado';
+    const successTitle = isEdit ? 'Instructor updated' : 'Instructor created';
 
     this.isSubmitting.set(true);
 
     request$.subscribe({
       next: () => {
         this.isSubmitting.set(false);
-        this.notify.success(successTitle, 'Los cambios se guardaron correctamente.');
+        this.notify.success(successTitle, 'Changes were saved successfully.');
         this.saved.emit();
       },
       error: () => {

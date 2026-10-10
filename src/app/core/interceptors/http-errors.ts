@@ -5,35 +5,35 @@ export type HttpErrorType = Partial<Record<HttpStatusCode, HttpErrorMessage>>;
 
 /** Sin respuesta del servidor (status 0: red caída, CORS, servidor apagado). */
 export const NETWORK_ERROR: HttpErrorMessage = {
-  title: 'Sin conexión',
-  message: 'No fue posible comunicarse con el servidor.'
+  title: 'Connection error',
+  message: 'Unable to reach the server.'
 };
 
 export const DEFAULT_HTTP_ERROR: HttpErrorMessage = {
-  title: 'Error inesperado',
-  message: 'Ocurrió un error al procesar la solicitud. Intenta de nuevo más tarde.'
+  title: 'Unexpected error',
+  message: 'Something went wrong while processing the request. Please try again later.'
 };
 
 /** Mensajes por status HTTP. `message` se reemplaza por `ProblemDetail.detail` si viene. */
 export const HTTP_ERRORS: HttpErrorType = {
   [HttpStatusCode.BadRequest]: {
-    title: 'Solicitud inválida',
-    message: 'Revisa los datos enviados.'
+    title: 'Invalid request',
+    message: 'Please review the submitted data.'
   },
   [HttpStatusCode.Unauthorized]: {
-    title: 'No autorizado',
-    message: 'Tu sesión expiró o las credenciales no son válidas.'
+    title: 'Unauthorized',
+    message: 'Your session has expired or the credentials are invalid.'
   },
   [HttpStatusCode.Forbidden]: {
-    title: 'Acceso denegado',
-    message: 'No tienes permisos para realizar esta acción.'
+    title: 'Access denied',
+    message: 'You do not have permission to perform this action.'
   },
   [HttpStatusCode.NotFound]: {
-    title: 'No encontrado',
-    message: 'El recurso solicitado no existe.'
+    title: 'Not found',
+    message: 'The requested resource does not exist.'
   },
   [HttpStatusCode.Conflict]: {
-    title: 'Conflicto',
-    message: 'El registro ya existe.'
+    title: 'Conflict',
+    message: 'The record already exists.'
   }
 };

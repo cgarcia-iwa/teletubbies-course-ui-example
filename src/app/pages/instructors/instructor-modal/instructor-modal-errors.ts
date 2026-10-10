@@ -16,23 +16,23 @@ export interface InstructorModalErrorType {
 
 export const INSTRUCTOR_MODAL_ERRORS: InstructorModalErrorType = {
   fullName: [
-    { type: 'required', message: 'El nombre es obligatorio.' },
-    { type: 'whitespace', message: 'El nombre no puede contener solo espacios.' },
-    { type: 'maxlength', message: `Máximo ${FULL_NAME_MAX_LENGTH} caracteres.` }
+    { type: 'required', message: 'Full name is required.' },
+    { type: 'whitespace', message: 'Full name cannot contain only spaces.' },
+    { type: 'maxlength', message: `Full name must be at most ${FULL_NAME_MAX_LENGTH} characters.` }
   ],
   email: [
-    { type: 'required', message: 'El correo es obligatorio.' },
-    { type: 'email', message: 'Ingresa un correo electrónico válido.' },
-    { type: 'maxlength', message: `Máximo ${EMAIL_MAX_LENGTH} caracteres.` }
+    { type: 'required', message: 'Email address is required.' },
+    { type: 'email', message: 'Enter a valid email address.' },
+    { type: 'maxlength', message: `Email address must be at most ${EMAIL_MAX_LENGTH} characters.` }
   ],
   password: [
-    { type: 'required', message: 'La contraseña es obligatoria.' },
-    { type: 'minlength', message: `Mínimo ${PASSWORD_MIN_LENGTH} caracteres.` },
-    { type: 'maxlength', message: `Máximo ${PASSWORD_MAX_LENGTH} caracteres.` }
+    { type: 'required', message: 'Password is required.' },
+    { type: 'minlength', message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters.` },
+    { type: 'maxlength', message: `Password must be at most ${PASSWORD_MAX_LENGTH} characters.` }
   ],
   confirmPassword: [
-    { type: 'required', message: 'Confirma la contraseña.' },
-    { type: 'mismatch', message: 'Las contraseñas no coinciden.' }
+    { type: 'required', message: 'Please confirm the password.' },
+    { type: 'mismatch', message: 'Passwords do not match.' }
   ],
-  role: [{ type: 'required', message: 'El rol es obligatorio.' }]
+  role: [{ type: 'required', message: 'Role is required.' }]
 };

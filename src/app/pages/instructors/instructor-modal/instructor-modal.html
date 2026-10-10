@@ -9,12 +9,12 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 id="instructor-modal-title" class="modal-title mb-0">
-            {{ isEditMode() ? 'Editar instructor' : 'Nuevo instructor' }}
+            {{ isEditMode() ? 'Edit instructor' : 'New instructor' }}
           </h5>
           <button
             type="button"
             class="btn-close"
-            aria-label="Cerrar"
+            aria-label="Close"
             [disabled]="isSubmitting()"
             (click)="onClose()"></button>
         </div>
@@ -24,7 +24,7 @@
             <div class="row g-3">
               <div class="col-12">
                 <label for="instructor-full-name" class="form-label">
-                  Nombre completo <span class="text-danger">*</span>
+                  Full name <span class="text-danger">*</span>
                 </label>
                 <input
                   id="instructor-full-name"
@@ -33,13 +33,13 @@
                   formControlName="fullName"
                   autocomplete="name"
                   [class.is-invalid]="form.controls.fullName.invalid && form.controls.fullName.touched"
-                  placeholder="Ej. Laa-Laa" />
+                  placeholder="e.g. Laa-Laa" />
                 <app-validation-message [control]="form.controls.fullName" [errors]="validationMessages.fullName" />
               </div>
 
               <div class="col-12">
                 <label for="instructor-email" class="form-label">
-                  Correo electrónico <span class="text-danger">*</span>
+                  Email address <span class="text-danger">*</span>
                 </label>
                 <input
                   id="instructor-email"
@@ -55,7 +55,7 @@
               @if (!isEditMode()) {
                 <div class="col-12 col-md-6">
                   <label for="instructor-password" class="form-label">
-                    Contraseña <span class="text-danger">*</span>
+                    Password <span class="text-danger">*</span>
                   </label>
                   <input
                     id="instructor-password"
@@ -69,7 +69,7 @@
 
                 <div class="col-12 col-md-6">
                   <label for="instructor-confirm-password" class="form-label">
-                    Confirmar contraseña <span class="text-danger">*</span>
+                    Confirm password <span class="text-danger">*</span>
                   </label>
                   <input
                     id="instructor-confirm-password"
@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="col-12">
-                  <label for="instructor-role" class="form-label"> Rol <span class="text-danger">*</span> </label>
+                  <label for="instructor-role" class="form-label"> Role <span class="text-danger">*</span> </label>
                   <select
                     id="instructor-role"
                     class="form-select"
@@ -105,7 +105,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" [disabled]="isSubmitting()" (click)="onClose()">
-            Cancelar
+            Cancel
           </button>
           <button
             type="button"
@@ -115,7 +115,7 @@
             @if (isSubmitting()) {
               <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
             }
-            {{ isEditMode() ? 'Guardar cambios' : 'Crear instructor' }}
+            {{ isEditMode() ? 'Save changes' : 'Create instructor' }}
           </button>
         </div>
       </div>
