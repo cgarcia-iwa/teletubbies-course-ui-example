@@ -1,4 +1,12 @@
-export type ErrorType = 'email' | 'max' | 'maxlength' | 'min' | 'minlength' | 'required';
+export type ErrorType =
+  | 'email'
+  | 'max'
+  | 'maxlength'
+  | 'min'
+  | 'minlength'
+  | 'mismatch'
+  | 'required'
+  | 'whitespace';
 
 export interface FormValidationError {
   type: ErrorType;
