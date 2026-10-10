@@ -20,8 +20,10 @@ export class Instructors implements OnInit {
 
   instructors$!: Observable<InstructorResource[]>;
 
-  // Solo ADMINISTRATOR puede dar de alta instructores.
-  readonly canCreate = this.authService.getRole() === 'ADMINISTRATOR';
+  // Solo ADMINISTRATOR puede crear y editar instructores.
+  readonly canManage = this.authService.getRole() === 'ADMINISTRATOR';
+  // Columnas de la tabla (incluye "Actions" si aplica), para el colspan de las filas vacías.
+  readonly columnCount = this.canManage ? 4 : 3;
   readonly showInstructorModal = signal(false);
   readonly instructorModalMode = signal<ModalMode>('CREATE');
   readonly selectedInstructor = signal<InstructorResource | null>(null);
@@ -39,6 +41,12 @@ export class Instructors implements OnInit {
   openCreate(): void {
     this.instructorModalMode.set('CREATE');
     this.selectedInstructor.set(null);
+    this.showInstructorModal.set(true);
+  }
+
+  openEdit(instructor: InstructorResource): void {
+    this.instructorModalMode.set('EDIT');
+    this.selectedInstructor.set(instructor);
     this.showInstructorModal.set(true);
   }
 
