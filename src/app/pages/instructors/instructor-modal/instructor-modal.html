@@ -107,11 +107,7 @@
           <button type="button" class="btn btn-outline-secondary" [disabled]="isSubmitting()" (click)="onClose()">
             Cancel
           </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            [disabled]="form.invalid || isSubmitting()"
-            (click)="onSubmit()">
+          <button type="button" class="btn btn-primary" [disabled]="isSaveDisabled()" (click)="onSubmit()">
             @if (isSubmitting()) {
               <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
             }

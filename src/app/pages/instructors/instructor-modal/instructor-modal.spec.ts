@@ -103,7 +103,7 @@ describe('InstructorModal', () => {
   describe('EDIT', () => {
     beforeEach(() => open('EDIT', INSTRUCTOR));
 
-    it('should preload the instructor, stay pristine and not require password', () => {
+    it('should preload the instructor, not require password and block saving without changes', () => {
       expect(component.form.getRawValue()).toEqual({
         fullName: INSTRUCTOR.fullName,
         email: INSTRUCTOR.email,
@@ -113,6 +113,10 @@ describe('InstructorModal', () => {
       });
       expect(component.form.pristine).toBe(true);
       expect(component.form.valid).toBe(true);
+      // Sin cambios no se puede guardar.
+      expect(component.isSaveDisabled()).toBe(true);
+      component.form.controls.fullName.markAsDirty();
+      expect(component.isSaveDisabled()).toBe(false);
     });
 
     it('should call update with the instructor id', () => {

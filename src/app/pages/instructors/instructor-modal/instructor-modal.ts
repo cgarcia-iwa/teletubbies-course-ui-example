@@ -6,7 +6,8 @@ import {
   inject,
   input,
   output,
-  signal
+  signal,
+  untracked
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -95,14 +96,18 @@ export class InstructorModal {
       }
 
       const instructor = this.instructor();
+      const mode = this.mode();
 
-      this.applyModeValidators(this.mode());
-      this.form.reset({
-        fullName: instructor?.fullName ?? '',
-        email: instructor?.email ?? '',
-        password: '',
-        confirmPassword: '',
-        role: instructor?.role ?? DEFAULT_INSTRUCTOR_ROLE
+      // Solo debe reaccionar a visible/mode/instructor, no a signals internos del formulario.
+      untracked(() => {
+        this.applyModeValidators(mode);
+        this.form.reset({
+          fullName: instructor?.fullName ?? '',
+          email: instructor?.email ?? '',
+          password: '',
+          confirmPassword: '',
+          role: instructor?.role ?? DEFAULT_INSTRUCTOR_ROLE
+        });
       });
     });
   }
@@ -114,6 +119,11 @@ export class InstructorModal {
 
     this.form.reset();
     this.closed.emit();
+  }
+
+  /** En EDIT no se permite guardar sin cambios (evita un PUT idéntico). */
+  isSaveDisabled(): boolean {
+    return this.form.invalid || this.isSubmitting() || (this.isEditMode() && this.form.pristine);
   }
 
   onSubmit(): void {

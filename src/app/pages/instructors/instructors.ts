@@ -3,6 +3,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { InstructorService } from '../../core/services/instructor.service';
+import { INSTRUCTOR_ROLE_LABELS } from '../../shared/model/instructor-role.model';
 import { InstructorResource } from '../../shared/model/instructor.model';
 import { ModalMode } from '../../shared/model/modal-mode.model';
 import { InstructorModal } from './instructor-modal/instructor-modal';
@@ -24,6 +25,7 @@ export class Instructors implements OnInit {
   readonly canManage = this.authService.getRole() === 'ADMINISTRATOR';
   // Columnas de la tabla (incluye "Actions" si aplica), para el colspan de las filas vacías.
   readonly columnCount = this.canManage ? 4 : 3;
+  readonly roleLabels = INSTRUCTOR_ROLE_LABELS;
   readonly showInstructorModal = signal(false);
   readonly instructorModalMode = signal<ModalMode>('CREATE');
   readonly selectedInstructor = signal<InstructorResource | null>(null);

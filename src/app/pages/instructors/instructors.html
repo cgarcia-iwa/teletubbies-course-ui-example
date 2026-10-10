@@ -27,7 +27,7 @@
         <tr>
           <td>{{ instructor.fullName }}</td>
           <td>{{ instructor.email }}</td>
-          <td>{{ instructor.role }}</td>
+          <td>{{ roleLabels[instructor.role] }}</td>
           @if (canManage) {
             <td class="text-end">
               <button
