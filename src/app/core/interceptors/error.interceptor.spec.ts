@@ -1,9 +1,14 @@
-import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpStatusCode,
+  provideHttpClient,
+  withInterceptors
+} from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { NotificationService } from '../services/notification.service';
 import { errorInterceptor } from './error.interceptor';
-import { HTTP_ERRORS } from './http-error-messages';
+import { HTTP_ERRORS } from './http-errors';
 
 describe('errorInterceptor', () => {
   let http: HttpClient;
@@ -33,7 +38,10 @@ describe('errorInterceptor', () => {
       .expectOne('/instructors')
       .flush({ detail: 'Email already exists' }, { status: 409, statusText: 'Conflict' });
 
-    expect(notify.error).toHaveBeenCalledWith(HTTP_ERRORS[409].title, 'Email already exists');
+    expect(notify.error).toHaveBeenCalledWith(
+      HTTP_ERRORS[HttpStatusCode.Conflict]?.title,
+      'Email already exists'
+    );
     expect(onError).toHaveBeenCalled();
   });
 
@@ -47,7 +55,10 @@ describe('errorInterceptor', () => {
         { status: 400, statusText: 'Bad Request' }
       );
 
-    expect(notify.error).toHaveBeenCalledWith(HTTP_ERRORS[400].title, 'email: must be valid');
+    expect(notify.error).toHaveBeenCalledWith(
+      HTTP_ERRORS[HttpStatusCode.BadRequest]?.title,
+      'email: must be valid'
+    );
   });
 
   it('should fall back to the status message when there is no ProblemDetail', () => {
@@ -55,6 +66,9 @@ describe('errorInterceptor', () => {
 
     httpTesting.expectOne('/instructors').flush(null, { status: 403, statusText: 'Forbidden' });
 
-    expect(notify.error).toHaveBeenCalledWith(HTTP_ERRORS[403].title, HTTP_ERRORS[403].message);
+    expect(notify.error).toHaveBeenCalledWith(
+      HTTP_ERRORS[HttpStatusCode.Forbidden]?.title,
+      HTTP_ERRORS[HttpStatusCode.Forbidden]?.message
+    );
   });
 });

@@ -1,7 +1,13 @@
-interface HttpErrorMessage {
-  title: string;
-  message: string;
-}
+import { HttpStatusCode } from '@angular/common/http';
+import { HttpErrorMessage } from '../../shared/model/http-error-message.model';
+
+export type HttpErrorType = Partial<Record<HttpStatusCode, HttpErrorMessage>>;
+
+/** Sin respuesta del servidor (status 0: red caída, CORS, servidor apagado). */
+export const NETWORK_ERROR: HttpErrorMessage = {
+  title: 'Sin conexión',
+  message: 'No fue posible comunicarse con el servidor.'
+};
 
 export const DEFAULT_HTTP_ERROR: HttpErrorMessage = {
   title: 'Error inesperado',
@@ -9,28 +15,24 @@ export const DEFAULT_HTTP_ERROR: HttpErrorMessage = {
 };
 
 /** Mensajes por status HTTP. `message` se reemplaza por `ProblemDetail.detail` si viene. */
-export const HTTP_ERRORS: Record<number, HttpErrorMessage> = {
-  0: {
-    title: 'Sin conexión',
-    message: 'No fue posible comunicarse con el servidor.'
-  },
-  400: {
+export const HTTP_ERRORS: HttpErrorType = {
+  [HttpStatusCode.BadRequest]: {
     title: 'Solicitud inválida',
     message: 'Revisa los datos enviados.'
   },
-  401: {
+  [HttpStatusCode.Unauthorized]: {
     title: 'No autorizado',
     message: 'Tu sesión expiró o las credenciales no son válidas.'
   },
-  403: {
+  [HttpStatusCode.Forbidden]: {
     title: 'Acceso denegado',
     message: 'No tienes permisos para realizar esta acción.'
   },
-  404: {
+  [HttpStatusCode.NotFound]: {
     title: 'No encontrado',
     message: 'El recurso solicitado no existe.'
   },
-  409: {
+  [HttpStatusCode.Conflict]: {
     title: 'Conflicto',
     message: 'El registro ya existe.'
   }
