@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { LOGIN_URL } from '../../api-urls';
-import { LoginRequest, LoginResponse } from '../../shared/model/auth.model';
+import { JwtClaims, LoginRequest, LoginResponse } from '../../shared/model/auth.model';
 import { InstructorRoleType } from '../../shared/model/instructor-role.model';
 import { ApiService } from './api.service';
 
@@ -43,6 +43,17 @@ export class AuthService {
 
   getToken(): string {
     return this.getSession().token;
+  }
+
+  /** Email del usuario en sesión: el claim `sub` del JWT. */
+  getEmail(): string {
+    return this.getClaims().sub;
+  }
+
+  /** Decodifica el payload del JWT (base64url). No valida la firma: eso lo hace el backend. */
+  private getClaims(): JwtClaims {
+    const payload = this.getToken().split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(atob(payload)) as JwtClaims;
   }
 
   private getSession(): StoredSession {

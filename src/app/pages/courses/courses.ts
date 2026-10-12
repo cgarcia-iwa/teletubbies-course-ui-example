@@ -22,9 +22,11 @@ export class Courses implements OnInit {
 
   courses$!: Observable<CourseResource[]>;
 
-  // Solo ADMINISTRATOR crea cursos. Editar lo pueden ambos roles: el backend valida
-  // que un TEACHER solo edite sus propios cursos (403 si no).
-  readonly canCreate = this.authService.getRole() === 'ADMINISTRATOR';
+  // Solo ADMINISTRATOR crea cursos y edita cualquiera; un TEACHER solo edita los suyos
+  // (el backend también lo valida y responde 403).
+  readonly isAdmin = this.authService.getRole() === 'ADMINISTRATOR';
+  readonly canCreate = this.isAdmin;
+  private readonly userEmail = this.authService.getEmail().toLowerCase();
   readonly levelLabels = COURSE_LEVEL_LABELS;
   readonly categoryLabels = COURSE_CATEGORY_LABELS;
   readonly showCourseModal = signal(false);
@@ -33,6 +35,10 @@ export class Courses implements OnInit {
 
   ngOnInit(): void {
     this.loadCourses();
+  }
+
+  canEdit(course: CourseResource): boolean {
+    return this.isAdmin || course.instructor.email.toLowerCase() === this.userEmail;
   }
 
   openCreate(): void {

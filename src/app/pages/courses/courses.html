@@ -37,13 +37,15 @@
           <td>{{ course.duration }}</td>
           <td>{{ course.instructor.fullName }}</td>
           <td class="text-end">
-            <button
-              type="button"
-              class="btn btn-sm btn-outline-primary"
-              [attr.aria-label]="'Edit ' + course.name"
-              (click)="openEdit(course)">
-              <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
-            </button>
+            @if (canEdit(course)) {
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-primary"
+                [attr.aria-label]="'Edit ' + course.name"
+                (click)="openEdit(course)">
+                <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
+              </button>
+            }
           </td>
         </tr>
       } @empty {
