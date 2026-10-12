@@ -1,0 +1,136 @@
+@if (visible()) {
+  <div
+    class="modal fade show d-block"
+    tabindex="-1"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="course-modal-title">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="course-modal-title" class="modal-title mb-0">
+            {{ isEditMode() ? 'Edit course' : 'New course' }}
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            [disabled]="isSubmitting()"
+            (click)="onClose()"></button>
+        </div>
+
+        <div class="modal-body">
+          <form novalidate [formGroup]="form">
+            <div class="row g-3">
+              <div class="col-12">
+                <label for="course-name" class="form-label"> Name <span class="text-danger">*</span> </label>
+                <input
+                  id="course-name"
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  [class.is-invalid]="form.controls.name.invalid && form.controls.name.touched"
+                  placeholder="e.g. Introduction to Spring Boot" />
+                <app-validation-message [control]="form.controls.name" [errors]="validationMessages.name" />
+              </div>
+
+              <div class="col-12">
+                <label for="course-description" class="form-label">Description</label>
+                <textarea
+                  id="course-description"
+                  class="form-control"
+                  rows="3"
+                  formControlName="description"
+                  [class.is-invalid]="
+                    form.controls.description.invalid && form.controls.description.touched
+                  "></textarea>
+                <app-validation-message
+                  [control]="form.controls.description"
+                  [errors]="validationMessages.description" />
+              </div>
+
+              <div class="col-12 col-md-4">
+                <label for="course-duration" class="form-label">
+                  Duration (hours) <span class="text-danger">*</span>
+                </label>
+                <input
+                  id="course-duration"
+                  type="text"
+                  inputmode="numeric"
+                  class="form-control"
+                  formControlName="duration"
+                  [class.is-invalid]="form.controls.duration.invalid && form.controls.duration.touched"
+                  placeholder="e.g. 12" />
+                <app-validation-message [control]="form.controls.duration" [errors]="validationMessages.duration" />
+              </div>
+
+              <div class="col-12 col-md-4">
+                <label for="course-level" class="form-label"> Level <span class="text-danger">*</span> </label>
+                <select
+                  id="course-level"
+                  class="form-select"
+                  formControlName="level"
+                  [class.is-invalid]="form.controls.level.invalid && form.controls.level.touched">
+                  <option value="" disabled>Select a level</option>
+                  @for (level of levels; track level) {
+                    <option [value]="level">{{ levelLabels[level] }}</option>
+                  }
+                </select>
+                <app-validation-message [control]="form.controls.level" [errors]="validationMessages.level" />
+              </div>
+
+              <div class="col-12 col-md-4">
+                <label for="course-category" class="form-label"> Category <span class="text-danger">*</span> </label>
+                <select
+                  id="course-category"
+                  class="form-select"
+                  formControlName="category"
+                  [class.is-invalid]="form.controls.category.invalid && form.controls.category.touched">
+                  <option value="" disabled>Select a category</option>
+                  @for (category of categories; track category) {
+                    <option [value]="category">{{ categoryLabels[category] }}</option>
+                  }
+                </select>
+                <app-validation-message [control]="form.controls.category" [errors]="validationMessages.category" />
+              </div>
+
+              <div class="col-12">
+                <label for="course-instructor" class="form-label">
+                  Instructor <span class="text-danger">*</span>
+                </label>
+                <select
+                  id="course-instructor"
+                  class="form-select"
+                  formControlName="instructorId"
+                  [class.is-invalid]="form.controls.instructorId.invalid && form.controls.instructorId.touched">
+                  <option value="" disabled>
+                    {{ isLoadingInstructors() ? 'Loading instructors…' : 'Select an instructor' }}
+                  </option>
+                  @for (instructor of instructors(); track instructor.id) {
+                    <option [value]="instructor.id">{{ instructor.fullName }}</option>
+                  }
+                </select>
+                <app-validation-message
+                  [control]="form.controls.instructorId"
+                  [errors]="validationMessages.instructorId" />
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" [disabled]="isSubmitting()" (click)="onClose()">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-primary" [disabled]="isSaveDisabled()" (click)="onSubmit()">
+            @if (isSubmitting()) {
+              <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+            }
+            {{ isEditMode() ? 'Save changes' : 'Create course' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show"></div>
+}
