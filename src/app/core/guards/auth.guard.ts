@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
-import { InstructorRoleType } from '../../shared/model/instructor-role.model';
+import { INSTRUCTOR_ROLES, InstructorRoleType } from '../../shared/model/instructor-role.model';
 import { AuthService } from '../services/auth.service';
 
-const ALL_ROLES: InstructorRoleType[] = ['ADMINISTRATOR', 'TEACHER'];
+const ALL_ROLES: InstructorRoleType[] = [...INSTRUCTOR_ROLES];
 
 /** `data` esperada en rutas protegidas por {@link authGuard}. */
 export interface AuthRouteData {
