@@ -1,7 +1,6 @@
 <header class="page-header">
   <h1>Cursos</h1>
   <div class="d-flex align-items-center gap-2">
-    <input type="search" placeholder="Buscar por nombre" aria-label="Buscar por nombre" />
     @if (canCreate) {
       <button type="button" class="btn btn-primary" (click)="openCreate()">
         <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Add course
@@ -9,6 +8,48 @@
     }
   </div>
 </header>
+
+<form class="filters" [formGroup]="filtersForm">
+  <label>
+    Nombre
+    <input type="search" formControlName="name" placeholder="Buscar por nombre" />
+    @if (filtersForm.controls.name.errors?.['maxlength']; as error) {
+      <small class="text-danger">Máximo {{ error.requiredLength }} caracteres.</small>
+    }
+  </label>
+
+  <label>
+    Nivel
+    <select formControlName="level">
+      <option value="">Todos</option>
+      @for (level of levels; track level) {
+        <option [value]="level">{{ levelLabels[level] }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    Categoría
+    <select formControlName="category">
+      <option value="">Todas</option>
+      @for (category of categories; track category) {
+        <option [value]="category">{{ categoryLabels[category] }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    Instructor
+    <select formControlName="instructorId">
+      <option value="">Todos</option>
+      @for (instructor of instructorOptions(); track instructor.id) {
+        <option [value]="instructor.id">{{ instructor.fullName }}</option>
+      }
+    </select>
+  </label>
+
+  <a href="#" (click)="resetFilters(); $event.preventDefault()">Resetear</a>
+</form>
 
 <table>
   <thead>
@@ -22,7 +63,7 @@
     </tr>
   </thead>
   <tbody>
-    @if (courses$ | async; as courses) {
+    @if (courses(); as courses) {
       <!-- @for requiere "track": identifica cada fila para no re-renderizar todo -->
       @for (course of courses; track course.id) {
         <tr>
@@ -40,10 +81,19 @@
             @if (canEdit(course)) {
               <button
                 type="button"
-                class="btn btn-sm btn-outline-primary"
+                class="btn btn-sm btn-outline-primary me-1"
                 [attr.aria-label]="'Edit ' + course.name"
                 (click)="openEdit(course)">
                 <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
+              </button>
+            }
+            @if (isAdmin) {
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger"
+                [attr.aria-label]="'Delete ' + course.name"
+                (click)="deleteCourse(course)">
+                <i class="bi bi-trash me-1" aria-hidden="true"></i>Delete
               </button>
             }
           </td>
@@ -60,6 +110,12 @@
     }
   </tbody>
 </table>
+
+<app-pagination
+  [page]="page().number"
+  [pageSize]="page().size"
+  [totalElements]="page().totalElements"
+  (pageChange)="onPageChange($event)" />
 
 <app-course-modal
   [visible]="showCourseModal()"
