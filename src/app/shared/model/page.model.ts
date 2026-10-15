@@ -18,3 +18,8 @@ export interface PagedResources<T> {
   page: PageResource;
   totalElements: number;
 }
+
+/** Estado de paginación que usan las pantallas de catálogo. `number` es base 0, igual que el API. */
+export interface PageInfo extends PageResource {
+  totalElements: number;
+}
