@@ -54,3 +54,32 @@ table {
     color: #6b7280;
   }
 }
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.8125rem;
+    color: #374151;
+  }
+
+  input,
+  select {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    min-width: 160px;
+  }
+
+  a {
+    padding-bottom: 0.5rem;
+    font-size: 0.875rem;
+  }
+}

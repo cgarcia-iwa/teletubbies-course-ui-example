@@ -1,7 +1,6 @@
 <header class="page-header">
   <h1>Instructores</h1>
   <div class="d-flex align-items-center gap-2">
-    <input type="search" placeholder="Buscar por nombre" aria-label="Buscar por nombre" />
     @if (canManage) {
       <button type="button" class="btn btn-primary" (click)="openCreate()">
         <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Add instructor
@@ -9,6 +8,36 @@
     }
   </div>
 </header>
+
+<form class="filters" [formGroup]="filtersForm">
+  <label>
+    Nombre
+    <input type="search" formControlName="fullName" placeholder="Buscar por nombre" />
+    @if (filtersForm.controls.fullName.errors?.['maxlength']; as error) {
+      <small class="text-danger">Máximo {{ error.requiredLength }} caracteres.</small>
+    }
+  </label>
+
+  <label>
+    Correo
+    <input type="search" formControlName="email" placeholder="Buscar por correo" />
+    @if (filtersForm.controls.email.errors?.['maxlength']; as error) {
+      <small class="text-danger">Máximo {{ error.requiredLength }} caracteres.</small>
+    }
+  </label>
+
+  <label>
+    Rol
+    <select formControlName="role">
+      <option value="">Todos</option>
+      @for (role of roles; track role) {
+        <option [value]="role">{{ roleLabels[role] }}</option>
+      }
+    </select>
+  </label>
+
+  <a href="#" (click)="resetFilters(); $event.preventDefault()">Resetear</a>
+</form>
 
 <table>
   <thead>
@@ -22,7 +51,7 @@
     </tr>
   </thead>
   <tbody>
-    @if (instructors$ | async; as instructors) {
+    @if (instructors(); as instructors) {
       @for (instructor of instructors; track instructor.id) {
         <tr>
           <td>{{ instructor.fullName }}</td>
@@ -32,10 +61,17 @@
             <td class="text-end">
               <button
                 type="button"
-                class="btn btn-sm btn-outline-primary"
+                class="btn btn-sm btn-outline-primary me-1"
                 [attr.aria-label]="'Edit ' + instructor.fullName"
                 (click)="openEdit(instructor)">
                 <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger"
+                [attr.aria-label]="'Delete ' + instructor.fullName"
+                (click)="deleteInstructor(instructor)">
+                <i class="bi bi-trash me-1" aria-hidden="true"></i>Delete
               </button>
             </td>
           }
@@ -52,6 +88,12 @@
     }
   </tbody>
 </table>
+
+<app-pagination
+  [page]="page().number"
+  [pageSize]="page().size"
+  [totalElements]="page().totalElements"
+  (pageChange)="onPageChange($event)" />
 
 <app-instructor-modal
   [visible]="showInstructorModal()"
