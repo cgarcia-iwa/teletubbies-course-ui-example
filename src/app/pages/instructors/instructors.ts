@@ -116,10 +116,18 @@ export class Instructors implements OnInit {
   }
 
   deleteInstructor(instructor: InstructorResource): void {
-    if (!confirm(`¿Eliminar al instructor "${instructor.fullName}"? Esta acción no se puede deshacer.`)) return;
+    if (
+      !confirm(
+        `¿Eliminar al instructor "${instructor.fullName}"? Esta acción no se puede deshacer.`
+      )
+    )
+      return;
     this.instructorService.delete(instructor.id).subscribe({
       next: () => {
-        this.notify.success('Instructor eliminado', `"${instructor.fullName}" fue eliminado correctamente.`);
+        this.notify.success(
+          'Instructor eliminado',
+          `"${instructor.fullName}" fue eliminado correctamente.`
+        );
         this.loadInstructors();
       }
     });
