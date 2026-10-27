@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
   pull_request:
     types:
       - opened
@@ -34,3 +34,13 @@ jobs:
 
       - name: Unit tests
         run: npm test
+
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Build Docker image
+        run: docker build -t course-ui:ci .

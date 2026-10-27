@@ -5,6 +5,11 @@ dist
 .idea
 .vscode
 .github
+e2e
+coverage
+playwright.config.ts
+playwright-report
+test-results
 Dockerfile
 docker-compose.yml
 .dockerignore

@@ -1,3 +1,5 @@
+.PHONY: docker-build docker-down-ui
+
 docker-build:
 	docker compose up --build -d
 
