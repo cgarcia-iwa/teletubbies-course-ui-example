@@ -1,0 +1,10 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        BUILD_ENV: ${BUILD_ENV:-development}
+    container_name: course_ui
+    ports:
+      - "8081:80"
+    restart: unless-stopped

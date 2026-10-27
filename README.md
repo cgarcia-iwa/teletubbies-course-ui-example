@@ -36,6 +36,57 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+## Docker
+
+The app is packaged as a multi-stage image: Node compiles the Angular app and nginx serves the static files. You need Docker with the Compose plugin.
+
+```bash
+# Build the image and start the container in the background
+make docker-build
+
+# Stop and remove the web container
+make docker-down-ui
+```
+
+Once running, open `http://localhost:8081/`. The container is named `course_ui` and nginx listens on port `80` inside it.
+
+Useful commands:
+
+```bash
+docker compose logs -f web   # follow logs
+docker compose ps            # check status
+docker compose down          # stop and remove everything
+```
+
+### Environment variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `BUILD_ENV` | `development` | Angular configuration compiled into the image. Accepted values: `development`, `production`. |
+
+`BUILD_ENV` selects the Angular configuration compiled into the image. Override it per build:
+
+```bash
+BUILD_ENV=production docker compose up --build
+```
+
+You can also set it in a local `.env` file (optional and git-ignored):
+
+```dotenv
+BUILD_ENV=production
+```
+
+Without Compose, the equivalent is:
+
+```bash
+docker build --build-arg BUILD_ENV=production -t course-ui .
+docker run --rm -p 8081:80 course-ui
+```
+
+The nginx configuration includes gzip, long-lived caching for hashed assets, and SPA fallback so routes like `/courses` work on refresh.
+
+> **Note:** `apiBaseUrl` is not an environment variable. It is defined at compile time in `src/environments/environment.ts` (development) and `src/environments/environment.prod.ts` (production), and selected by `BUILD_ENV` through Angular's `fileReplacements`.
+
 ## Running unit tests
 
 To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
